@@ -6,9 +6,7 @@ var displayphoto2 = document.getElementById('photoholder2');
 var photo1;
 var photo2;
 var update;
-var ctx = document.getElementById("piechart").getContext("2d");
-var myNewChart = new Chart(ctx).Pie(pieData);
-
+var firstVote = true;
 //photo Object constructor
 
 function Photo(theName, path) {
@@ -130,10 +128,10 @@ var pieData = [{
     }
 ];
 
-drawFuckingChart = function () {
-  myNewChart;
-  console.log(myNewChart);
-  }
+// drawFuckingChart = function () {
+//   myNewChart;
+//   console.log(myNewChart);
+//  }
 
 //Tracker Object constructor
 // function VoteTracker() {
@@ -181,20 +179,27 @@ refreshPhotos = function () {
 }
 
 displayphoto1.addEventListener('click', function () {
+  if (firstVote === true) {
+    pieData[photo1].value = 1;
+    var ctx = document.getElementById("piechart").getContext("2d");
+    var myNewChart = new Chart(ctx).Pie(pieData);
+    firstVote === false;
+  }
   allPhotos[photo1].votes+=1;
-  myNewChart.pieData[photo1].value = allPhotos[photo1].votes;
-  console.log(pieData);
+  myNewChart.segments[photo1].value = allPhotos[photo1].votes;
   myNewChart.update();
-  drawFuckingChart();
   refreshPhotos();
 });
 displayphoto2.addEventListener('click', function () {
+  if (firstVote === true) {
+    pieData[photo1].value = 1;
+    var ctx = document.getElementById("piechart").getContext("2d");
+    var myNewChart = new Chart(ctx).Pie(pieData);
+    firstVote === false;
+  }
   allPhotos[photo2].votes+=1;
-  console.log(allPhotos[photo2].votes);
-  console.log(pieData);
-  myNewChart.addData(allPhotos[photo2].votes); //maybe????
+  myNewChart.segments[photo2].value = allPhotos[photo2].votes;
   myNewChart.update();
-  drawFuckingChart();
   refreshPhotos();
 });
 
