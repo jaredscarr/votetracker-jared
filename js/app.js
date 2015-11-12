@@ -5,7 +5,8 @@ var displayphoto1 = document.getElementById('photoholder1');
 var displayphoto2 = document.getElementById('photoholder2');
 var photo1;
 var photo2;
-
+var update;
+var firstVote = true;
 //photo Object constructor
 
 function Photo(theName, path) {
@@ -30,6 +31,108 @@ var prague = new Photo('Prague', 'images/prague.jpg');
 var yellowStone = new Photo('Yellowstone', 'images/yellowstone.jpg');
 var zurich = new Photo('Zurich', 'images/zurich.jpg');
 var budapest = new Photo('Budapest', 'images/budapest.jpg');
+//pieData Array
+var pieData = [{
+        value: 0,
+        // value: 19,
+        color:"#F7464A",
+        highlight: "#FF5A5E",
+        label: allPhotos[0].theName
+    },
+    {
+        value: 0,
+        // value: 45,
+        color: "#46BFBD",
+        highlight: "#5AD3D1",
+        label: allPhotos[1].theName
+    },
+    {
+        value: 0,
+        // value: 15,
+        color: "#FDB45C",
+        highlight: "#FFC870",
+        label: allPhotos[2].theName
+    },
+    {
+        value: 0,
+        // value: 35,
+        color:"#F7464A",
+        highlight: "#FF5A5E",
+        label: allPhotos[3].theName
+    },
+    {
+        value: 0,
+        color: "#46BFBD",
+        highlight: "#5AD3D1",
+        label: allPhotos[4].theName
+    },
+    {
+        value: 0,
+        color: "#FDB45C",
+        highlight: "#FFC870",
+        label: allPhotos[5].theName
+    },
+    {
+        value: 0,
+        color:"#F7464A",
+        highlight: "#FF5A5E",
+        label: allPhotos[6].theName
+    },
+    {
+        value: 0,
+        color: "#46BFBD",
+        highlight: "#5AD3D1",
+        label: allPhotos[7].theName
+    },
+    {
+        value: 0,
+        color: "#FDB45C",
+        highlight: "#FFC870",
+        label: allPhotos[8].theName
+    },
+    {
+        value: 0,
+        color:"#F7464A",
+        highlight: "#FF5A5E",
+        label: allPhotos[9].theName
+    },
+    {
+        value: 0,
+        color: "#46BFBD",
+        highlight: "#5AD3D1",
+        label: allPhotos[10].theName
+    },
+    {
+        value: 0,
+        color: "#FDB45C",
+        highlight: "#FFC870",
+        label: allPhotos[11].theName
+    },
+    {
+        value: 0,
+        color:"#F7464A",
+        highlight: "#FF5A5E",
+        label: allPhotos[12].theName
+    },
+    {
+        value: 0,
+        color: "#46BFBD",
+        highlight: "#5AD3D1",
+        label: allPhotos[13].theName
+    },
+    {
+        value: 0,
+        color: "#FDB45C",
+        highlight: "#FFC870",
+        label: allPhotos[14].theName
+    }
+];
+
+// drawFuckingChart = function () {
+//   myNewChart;
+//   console.log(myNewChart);
+//  }
+
 //Tracker Object constructor
 // function VoteTracker() {
 
@@ -38,7 +141,6 @@ var budapest = new Photo('Budapest', 'images/budapest.jpg');
 
 randomPhoto = function () {
   randomGenerate = Math.floor(Math.random() * allPhotos.length);
-  console.log (randomGenerate);
   return randomGenerate;
 }
 
@@ -77,27 +179,33 @@ refreshPhotos = function () {
 }
 
 displayphoto1.addEventListener('click', function () {
-  allPhotos[photo1].votes++;
+  if (firstVote === true) {
+    pieData[photo1].value = 1;
+    var ctx = document.getElementById("piechart").getContext("2d");
+    var myNewChart = new Chart(ctx).Pie(pieData);
+    firstVote === false;
+  }
+  allPhotos[photo1].votes+=1;
+  myNewChart.segments[photo1].value = allPhotos[photo1].votes;
+  myNewChart.update();
   refreshPhotos();
-  console.log(allPhotos[photo1]);
 });
 displayphoto2.addEventListener('click', function () {
-  allPhotos[photo2].votes++;
+  if (firstVote === true) {
+    pieData[photo1].value = 1;
+    var ctx = document.getElementById("piechart").getContext("2d");
+    var myNewChart = new Chart(ctx).Pie(pieData);
+    firstVote === false;
+  }
+  allPhotos[photo2].votes+=1;
+  myNewChart.segments[photo2].value = allPhotos[photo2].votes;
+  myNewChart.update();
   refreshPhotos();
-  console.log(allPhotos[photo2]);
 });
 
 //takes selected photo and highlights it
 
 display();
-
-// VoteTracker.protoype.pieChart = function(){
-
-// };
-
-// //code
-// // put everything after intitial load into an event listener connected to a "Play Again" button
-// VoteTracker.display();// move this to inside a while loop that calls all methods.
 
 
 
