@@ -1,0 +1,63 @@
+body {
+  padding-right: 40px;
+  padding-left: 40px;
+}
+
+header {
+  margin-top: -35px;
+}
+
+.content {
+}
+#title {
+  margin-left: 200px;
+  font-size: 48px;
+  padding-top: 30px;
+  padding-bottom: 50px;
+}
+
+.row {
+  margin-bottom: 30px;
+}
+
+#left {
+  margin: 0px, auto;
+}
+
+#right {
+  margin: 0px, auto;
+}
+
+img {
+  -webkit-box-shadow: 3px 3px 5px 3px #FFFFFF;  /* Safari 3-4, iOS 4.0.2 - 4.2, Android 2.3+ */
+  -moz-box-shadow:    3px 3px 5px 3px #FFFFFF;  /* Firefox 3.5 - 3.6 */
+  box-shadow:         3px 3px 5px 3px #FFFFFF;  /* Opera 10.5, IE 9, Firefox 4+, Chrome 6+, iOS 5 */
+  margin: 0px, auto;
+}
+
+#question {
+  padding-top: 50px;
+  padding-left:200px;
+}
+
+.text {
+  margin: 100px, 0px, 0px, 50px;
+}
+
+#voteAgainButton {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#piechart {
+  margin-top: 45px;
+  margin-left: 100px;
+}
+
+#copyright {
+  float: right;
+}
+
+.hide {
+  visibility: hidden;
+}

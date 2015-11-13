@@ -10,27 +10,42 @@
 <body>
   <div id="page">
     <header>
-      <h1>Where would you rather go?</h1>
+      <h1 id="question">Where would you go?</h1>
     </header>
     <div id="content">
       <div class="row">
-        <div class="one-third column" id="photoholder1"></div>
-        <div class="one-third column">
-          <h1 id="or">or</h1>
+        <div class="one-half column" class="images" id="photoholder1">
         </div>
-        <div class="one-third column" id="photoholder2"></div>
+        <div class="one-half column" class="images" id="photoholder2"></div>
       </div>
       <div class="row">
-        <div class="one-third column"></div>
-        <div class="one-third column"></div>
-        <div class="one-third column" id="chartholder">
+        <div class="one-half column">
+          <p id="captionLeft"></p>
+        </div>
+        <div class="one-half column">
+          <p id="captionRight"></p>
+        </div>
+      </div>
+      </div>
+      <section>
+        <input type="button" value="Vote Again" id="voteAgainButton" class="hide">
+      </section>
+      <div class="row">
+        <div class="one-half column">
+          <h4 class="text">Click the photo of the place you would rather go.Move your cursor over the pie chart to see the results. Unless the bug in chart.js is still making it do weird things! In which case nevermind.</h4>
+        </div>
+        <div class="one-half column" id="chartholder">
           <canvas id="piechart" width="300" height="300"></canvas>
         </div>
       </div>
     </div> <!--content-->
-    <footer></footer>
+    <footer>
+      <p id="copyright">copyright©2015</p>
+    </footer>
   </div>
   <script type="text/javascript" src="js/app.js"></script>
+  <script type="text/javascript" src="js/highlight.js"></script>
 </body>
 </html>
 
+<!-- <input type="button" value="button input"> -->
