@@ -1,5 +1,6 @@
 //variables
 var allPhotos = [];
+var pieData = [];
 var randomGenerate;
 var displayphoto1 = document.getElementById('photoholder1');
 var displayphoto2 = document.getElementById('photoholder2');
@@ -33,113 +34,107 @@ var prague = new Photo('Prague', 'images/prague.jpg');
 var yellowStone = new Photo('Yellowstone', 'images/yellowstone.jpg');
 var zurich = new Photo('Zurich', 'images/zurich.jpg');
 var budapest = new Photo('Budapest', 'images/budapest.jpg');
-//pieData Array
-var pieData = [{
-        value: 0,
-        // value: 19,
-        color:"#F7464A",
-        highlight: "#FF5A5E",
-        label: allPhotos[0].theName
-    },
-    {
-        value: 0,
-        // value: 45,
-        color: "#46BFBD",
-        highlight: "#5AD3D1",
-        label: allPhotos[1].theName
-    },
-    {
-        value: 0,
-        // value: 15,
-        color: "#FDB45C",
-        highlight: "#FFC870",
-        label: allPhotos[2].theName
-    },
-    {
-        value: 0,
-        // value: 35,
-        color:"#F7464A",
-        highlight: "#FF5A5E",
-        label: allPhotos[3].theName
-    },
-    {
-        value: 0,
-        color: "#46BFBD",
-        highlight: "#5AD3D1",
-        label: allPhotos[4].theName
-    },
-    {
-        value: 0,
-        color: "#FDB45C",
-        highlight: "#FFC870",
-        label: allPhotos[5].theName
-    },
-    {
-        value: 0,
-        color:"#F7464A",
-        highlight: "#FF5A5E",
-        label: allPhotos[6].theName
-    },
-    {
-        value: 0,
-        color: "#46BFBD",
-        highlight: "#5AD3D1",
-        label: allPhotos[7].theName
-    },
-    {
-        value: 0,
-        color: "#FDB45C",
-        highlight: "#FFC870",
-        label: allPhotos[8].theName
-    },
-    {
-        value: 0,
-        color:"#F7464A",
-        highlight: "#FF5A5E",
-        label: allPhotos[9].theName
-    },
-    {
-        value: 0,
-        color: "#46BFBD",
-        highlight: "#5AD3D1",
-        label: allPhotos[10].theName
-    },
-    {
-        value: 0,
-        color: "#FDB45C",
-        highlight: "#FFC870",
-        label: allPhotos[11].theName
-    },
-    {
-        value: 0,
-        color:"#F7464A",
-        highlight: "#FF5A5E",
-        label: allPhotos[12].theName
-    },
-    {
-        value: 0,
-        color: "#46BFBD",
-        highlight: "#5AD3D1",
-        label: allPhotos[13].theName
-    },
-    {
-        value: 0,
-        color: "#FDB45C",
-        highlight: "#FFC870",
-        label: allPhotos[14].theName
-    }
-];
 
-// drawFuckingChart = function () {
-//   myNewChart;
-//   console.log(myNewChart);
-//  }
+checkLocal = function () {
+  if (localStorage.pieData && localStorage.allPhotos) {
+    pieData = JSON.parse(localStorage.pieData);
+    allPhotos = JSON.parse(localStorage.allPhotos);
+  } else {
+  //pieData Array
+    pieData = [{
+            value: 0,
+            color:"#F7464A",
+            highlight: "#FF5A5E",
+            label: allPhotos[0].theName
+        },
+        {
+            value: 0,
+            color: "#46BFBD",
+            highlight: "#5AD3D1",
+            label: allPhotos[1].theName
+        },
+        {
+            value: 0,
+            color: "#FDB45C",
+            highlight: "#FFC870",
+            label: allPhotos[2].theName
+        },
+        {
+            value: 0,
+            color:"#F7464A",
+            highlight: "#FF5A5E",
+            label: allPhotos[3].theName
+        },
+        {
+            value: 0,
+            color: "#46BFBD",
+            highlight: "#5AD3D1",
+            label: allPhotos[4].theName
+        },
+        {
+            value: 0,
+            color: "#FDB45C",
+            highlight: "#FFC870",
+            label: allPhotos[5].theName
+        },
+        {
+            value: 0,
+            color:"#F7464A",
+            highlight: "#FF5A5E",
+            label: allPhotos[6].theName
+        },
+        {
+            value: 0,
+            color: "#46BFBD",
+            highlight: "#5AD3D1",
+            label: allPhotos[7].theName
+        },
+        {
+            value: 0,
+            color: "#FDB45C",
+            highlight: "#FFC870",
+            label: allPhotos[8].theName
+        },
+        {
+            value: 0,
+            color:"#F7464A",
+            highlight: "#FF5A5E",
+            label: allPhotos[9].theName
+        },
+        {
+            value: 0,
+            color: "#46BFBD",
+            highlight: "#5AD3D1",
+            label: allPhotos[10].theName
+        },
+        {
+            value: 0,
+            color: "#FDB45C",
+            highlight: "#FFC870",
+            label: allPhotos[11].theName
+        },
+        {
+            value: 0,
+            color:"#F7464A",
+            highlight: "#FF5A5E",
+            label: allPhotos[12].theName
+        },
+        {
+            value: 0,
+            color: "#46BFBD",
+            highlight: "#5AD3D1",
+            label: allPhotos[13].theName
+        },
+        {
+            value: 0,
+            color: "#FDB45C",
+            highlight: "#FFC870",
+            label: allPhotos[14].theName
+        }];
+  }
+}
 
-//Tracker Object constructor
-// function VoteTracker() {
-
-// }
-//functions to change into methods of the tracker functions
+checkLocal();
 
 randomPhoto = function () {
   randomGenerate = Math.floor(Math.random() * allPhotos.length);
@@ -224,6 +219,9 @@ leftEventListener = function () {
   allPhotos[photo1].votes+=1;
   myNewChart.segments[photo1].value = allPhotos[photo1].votes;
   myNewChart.update();
+  //push allPhotos and pieData here
+  localStorage.setItem('pieData', JSON.stringify(pieData));
+  localStorage.setItem('allPhotos', JSON.stringify(allPhotos));
   stateResults();
 }
 
@@ -234,9 +232,12 @@ rightEventListener = function () {
     var myNewChart = new Chart(ctx).Pie(pieData);
     firstVote === false;
     }
-  allPhotos[photo2].votes+=1;
+  allPhotos[photo2].votes+=1;//push to local storage
   myNewChart.segments[photo2].value = allPhotos[photo2].votes;
   myNewChart.update();
+  //push all photos and pieData here
+  localStorage.setItem('pieData', JSON.stringify(pieData));
+  localStorage.setItem('allPhotos', JSON.stringify(allPhotos));
   stateResults();
 }
 
