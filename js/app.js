@@ -10,6 +10,9 @@ var photo2;
 var update;
 var firstVote = true;
 var voting = true;
+var getReset = document.getElementById('resetButton');
+var result;
+var myNewChart;
 //photo Object constructor
 
 function Photo(theName, path) {
@@ -35,7 +38,7 @@ var yellowStone = new Photo('Yellowstone', 'images/yellowstone.jpg');
 var zurich = new Photo('Zurich', 'images/zurich.jpg');
 var budapest = new Photo('Budapest', 'images/budapest.jpg');
 
-checkLocal = function () {
+var checkLocal = function () {
   if (localStorage.pieData && localStorage.allPhotos) {
     pieData = JSON.parse(localStorage.pieData);
     allPhotos = JSON.parse(localStorage.allPhotos);
@@ -136,12 +139,12 @@ checkLocal = function () {
 
 checkLocal();
 
-randomPhoto = function () {
+var randomPhoto = function () {
   randomGenerate = Math.floor(Math.random() * allPhotos.length);
   return randomGenerate;
 }
 
-display = function () {
+var display = function () {
   photo1 = randomPhoto();
   photo2 = randomPhoto();
 
@@ -182,6 +185,8 @@ refreshPhotos = function () {
   changeLeftCaption.innerHTML = allPhotos[photo1].theName;
   var changeRightCaption = document.getElementById('captionRight');
   changeRightCaption.innerHTML = allPhotos[photo2].theName;
+  getLeft.removeAttribute('class', 'highlight');
+  getRight.removeAttribute('class', 'highlight');
 }
 
 
@@ -191,21 +196,21 @@ stateVoting = function() {
   hideChart.setAttribute('class', 'hide');
   var hideButton = document.getElementById('voteAgainButton');
   hideButton.setAttribute('class', 'hide');
-
   displayphoto1.addEventListener('click', leftEventListener);
   displayphoto2.addEventListener('click', rightEventListener);
 }
 
-stateResults = function() {
-  //highlight selection
+stateResults = function(result) {
+  console.log(result);
   displayphoto1.removeEventListener('click', leftEventListener);
   displayphoto2.removeEventListener('click', rightEventListener);
   var showChart = document.getElementById('piechart');
   showChart.removeAttribute('class', 'hide');
   var showButton = document.getElementById('voteAgainButton');
   showButton.removeAttribute('class', 'hide');
-  console.log(showButton);
-  //add event listener that calls stateVoting
+  var lightUp = document.getElementById(result);
+  console.log(lightUp)
+  lightUp.setAttribute('class', 'highlight');
   showButton.addEventListener('click', stateVoting);
 }
 
@@ -213,8 +218,8 @@ leftEventListener = function () {
   if (firstVote === true) {
     pieData[photo1].value = 1;
     var ctx = document.getElementById("piechart").getContext("2d");
-    var myNewChart = new Chart(ctx).Pie(pieData);
-    firstVote === false;
+    myNewChart = new Chart(ctx).Pie(pieData);
+    firstVote = false;
     }
   allPhotos[photo1].votes+=1;
   myNewChart.segments[photo1].value = allPhotos[photo1].votes;
@@ -222,15 +227,16 @@ leftEventListener = function () {
   //push allPhotos and pieData here
   localStorage.setItem('pieData', JSON.stringify(pieData));
   localStorage.setItem('allPhotos', JSON.stringify(allPhotos));
-  stateResults();
+  result = 'left';
+  stateResults(result);
 }
 
 rightEventListener = function () {
   if (firstVote === true) {
     pieData[photo1].value = 1;
     var ctx = document.getElementById("piechart").getContext("2d");
-    var myNewChart = new Chart(ctx).Pie(pieData);
-    firstVote === false;
+    myNewChart = new Chart(ctx).Pie(pieData);
+    firstVote = false;
     }
   allPhotos[photo2].votes+=1;//push to local storage
   myNewChart.segments[photo2].value = allPhotos[photo2].votes;
@@ -238,9 +244,14 @@ rightEventListener = function () {
   //push all photos and pieData here
   localStorage.setItem('pieData', JSON.stringify(pieData));
   localStorage.setItem('allPhotos', JSON.stringify(allPhotos));
-  stateResults();
+  result = 'right';
+  stateResults(result);
 }
 
+//event listener for reset button
+getReset.addEventListener('click', function() {
+  localStorage.clear();
+});
 
 display();
 
